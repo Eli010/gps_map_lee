@@ -6,9 +6,11 @@ import 'package:maps_app_lee/blocs/blocs.dart';
 import 'package:maps_app_lee/screens/screens.dart';
 
 void main() {
-  runApp(MultiBlocProvider(
-      providers: [BlocProvider(create: (BuildContext context) => GpsBloc())],
-      child: const MapsApp()));
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider(create: (BuildContext context) => GpsBloc()),
+    BlocProvider(create: (BuildContext context) => LocationBloc()),
+    BlocProvider(create: (BuildContext context) => MapBloc())
+  ], child: const MapsApp()));
 }
 
 class MapsApp extends StatelessWidget {

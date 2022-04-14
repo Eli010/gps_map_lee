@@ -28,7 +28,7 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
     //AQUI AGRUPAREMOS LOS DOS EVENTOS
     final gpsInitStatus =
         await Future.wait([_checkGpsStatus(), _isPermissionGranted()]);
-    print(gpsInitStatus);
+    // print(gpsInitStatus);
     add(GpsAndPermissionEvent(
         isGpsEnabled: gpsInitStatus[0],
         isGpsPermissionGranted: gpsInitStatus[1]));
@@ -55,7 +55,7 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
     gpsServiceSubscription =
         Geolocator.getServiceStatusStream().listen((event) {
       final isEnabled = (event.index == 1) ? true : false;
-      print('service status: $isEnabled');
+      // print('service status: $isEnabled');
       add(GpsAndPermissionEvent(
           isGpsEnabled: isEnabled,
           isGpsPermissionGranted: state.isGpsPermissionGranted));
