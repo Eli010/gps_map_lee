@@ -13,3 +13,19 @@ class OnMapInitializedEvent extends MapEvent {
 
   const OnMapInitializedEvent(this.controller);
 }
+
+//me creo el vento para dejar de seguir
+class OnStopFollowingUserMapEvent extends MapEvent {}
+
+//me creo otro evento para seguir
+class OnStartFollowingUserMapEvent extends MapEvent {}
+
+//para trazar  o dibujar nuestro polylines
+class UpdateUserPolylineEvent extends MapEvent {
+  //la longitud y latitud
+  final List<LatLng> userLocation;
+  const UpdateUserPolylineEvent(this.userLocation);
+}
+
+//para mostrar u ocultar mi plylines
+class OnToggleUserRoute extends MapEvent {}

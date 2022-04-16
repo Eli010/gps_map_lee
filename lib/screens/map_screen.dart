@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:maps_app_lee/blocs/blocs.dart';
 import 'package:maps_app_lee/views/views.dart';
@@ -37,17 +37,26 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<LocationBloc, LocationState>(builder: (context, state) {
-        if (state.lastKnownLocation == null) {
+      body: BlocBuilder<LocationBloc, LocationState>(
+          builder: (context, locationState) {
+        if (locationState.lastKnownLocation == null) {
           return const Center(
             child: Text('Espere por favor...'),
           );
         }
-        return SingleChildScrollView(
-          child: Stack(
-            children: [MapView(initialLocation: state.lastKnownLocation!)],
-          ),
-        );
+        return BlocBuilder<MapBloc, MapState>(builder: (context, mapState) {
+          Map<String, Polyline> polylines = Map.from(mapState.polylines);
+          if (!mapState.showMyRoute) {
+            polylines.removeWhere((key, value) => key == 'myRoute');
+          }
+          return SingleChildScrollView(
+            child: Stack(children: [
+              MapView(
+                  initialLocation: locationState.lastKnownLocation!,
+                  polylines: polylines.values.toSet())
+            ]),
+          );
+        });
         //aqui mostramos nuestra mapa
         // final CameraPosition initialCameraPisition =
         //     CameraPosition(target: state.lastKnownLocation!, zoom: 15);
@@ -63,7 +72,11 @@ class _MapScreenState extends State<MapScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: const [BtnCurrentLocation()],
+        children: const [
+          BtnToggleUserRoute(),
+          BtnFollowUse(),
+          BtnCurrentLocation()
+        ],
       ),
     );
   }
