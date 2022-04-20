@@ -29,3 +29,9 @@ class UpdateUserPolylineEvent extends MapEvent {
 
 //para mostrar u ocultar mi plylines
 class OnToggleUserRoute extends MapEvent {}
+
+class DisplayPolylinesEvent extends MapEvent {
+  final Map<String, Polyline> polylines;
+
+  const DisplayPolylinesEvent(this.polylines);
+}

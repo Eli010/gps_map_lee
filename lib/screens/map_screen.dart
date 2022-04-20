@@ -53,7 +53,10 @@ class _MapScreenState extends State<MapScreen> {
             child: Stack(children: [
               MapView(
                   initialLocation: locationState.lastKnownLocation!,
-                  polylines: polylines.values.toSet())
+                  polylines: polylines.values.toSet()),
+              //TODO: botones
+              const SearchBar(),
+              const ManualMarker()
             ]),
           );
         });
